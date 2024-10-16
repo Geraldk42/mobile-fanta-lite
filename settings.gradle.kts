@@ -19,6 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FantaCalendar"
+rootProject.name = "LoginApp"
 include(":app")
- 
