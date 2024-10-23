@@ -49,4 +49,22 @@
     <string name="icon_1" />
     <string name="icon_2" />
     <string name="profile">Profile</string>
+    <string name="todo">TODO</string>
+    <string name="profile_name">Profile Name</string>
+    <string name="account">Account</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="privacy_and_security">Privacy and Security</string>
+    <string name="online_status">Online Status</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="calendar_access">Calendar Access</string>
+    <string name="account_type">Account Type</string>
+    <string name="manage_friends">Manage Friends</string>
+    <string name="private">Private</string>
+    <string name="public">Public</string>
+    <string name="deny">Deny</string>
+    <string name="allow">Allow</string>
+    <string name="notifications">Notifications</string>
+    <string name="show_notifications">Show Notifications</string>
 </resources>
