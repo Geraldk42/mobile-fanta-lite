@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "407051480518",
+    "project_id": "linkcal-e2cff",
+    "storage_bucket": "linkcal-e2cff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407051480518:android:8a7983029e27667871d6c7",
+        "android_client_info": {
+          "package_name": "com.example.linkcal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC1MexnkrMbm3PwcHddbH3nHSCONLK3TU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
