@@ -6,6 +6,24 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="todo">TODO</string>
+
+    <!-- marieta strings -->
+    <string name="profile_name">Profile Name</string>
+    <string name="account">Account</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="privacy_and_security">Privacy and Security</string>
+    <string name="online_status">Online Status</string>
+    <string name="calendar_access">Calendar Access</string>
+    <string name="account_type">Account Type</string>
+    <string name="manage_friends">Manage Friends</string>
+
+    <string name="back_home">Back Home</string>
+
+    <string name="profile">Profile</string>
+
+    <string name="event_owner">Created by: %s</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
