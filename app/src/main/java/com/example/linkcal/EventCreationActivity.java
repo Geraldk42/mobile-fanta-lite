@@ -1,8 +1,5 @@
-// BILL
-
 package com.example.linkcal;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,19 +8,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import com.example.linkcal.helpers.FirebaseHelper;
+import com.example.linkcal.models.Event;
+import com.example.linkcal.BaseActivity;
 
 public class EventCreationActivity extends BaseActivity {
 
     private EditText titleEditText, ownerEditText;
     private TextView dateTextView;
     private Calendar selectedDate;
+    private Button createEventButton;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +32,7 @@ public class EventCreationActivity extends BaseActivity {
         ownerEditText = findViewById(R.id.ownerEditText);
         dateTextView = findViewById(R.id.dateTextView);
         Button datePickerButton = findViewById(R.id.datePickerButton);
-        Button createEventButton = findViewById(R.id.createEventButton);
+        createEventButton = findViewById(R.id.createEventButton);
 
         selectedDate = Calendar.getInstance();
 
@@ -49,7 +48,8 @@ public class EventCreationActivity extends BaseActivity {
             selectedDate.set(Calendar.MONTH, month);
             selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             updateDateDisplay();
-        }, selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH)).show();
+        }, selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH),
+                selectedDate.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void updateDateDisplay() {
@@ -66,14 +66,30 @@ public class EventCreationActivity extends BaseActivity {
             return;
         }
 
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("title", title);
-        resultIntent.putExtra("owner", owner);
-        resultIntent.putExtra("date", selectedDate.get(Calendar.DAY_OF_MONTH));
-        resultIntent.putExtra("month", new SimpleDateFormat("MMM", Locale.getDefault()).format(selectedDate.getTime()));
-        resultIntent.putExtra("day", new SimpleDateFormat("EEEE", Locale.getDefault()).format(selectedDate.getTime()));
+        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMM", Locale.getDefault());
+        String day = dayFormat.format(selectedDate.getTime());
+        String month = monthFormat.format(selectedDate.getTime());
+        String date = String.valueOf(selectedDate.get(Calendar.DAY_OF_MONTH));
 
-        setResult(RESULT_OK, resultIntent);
-        finish();
+        Event event = new Event(date, day, month, title, owner);
+
+        createEventButton.setEnabled(false);
+
+        FirebaseHelper.getInstance().addDocument("events", event.toMap(),
+                documentId -> {
+                    Toast.makeText(this, "Event created successfully", Toast.LENGTH_SHORT).show();
+                    // Return the new event data to CalendarActivity
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("eventId", documentId);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                },
+                exception -> {
+                    createEventButton.setEnabled(true);
+                    Toast.makeText(this, "Error creating event: " + exception.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
+        );
     }
 }

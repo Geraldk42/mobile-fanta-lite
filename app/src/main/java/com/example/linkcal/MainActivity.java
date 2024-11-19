@@ -18,7 +18,9 @@ public class MainActivity extends BaseActivity {
         friendsButton.setOnClickListener(v -> startActivity(new Intent(this, CalendarActivity.class)));
         calendarButton.setOnClickListener(v -> startActivity(new Intent(this, CalendarActivity.class)));
         schoolButtom.setOnClickListener(v -> startActivity(new Intent(this, CalendarActivity.class)));
-    }
+
+
+         }
 
 
 }

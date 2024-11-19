@@ -19,9 +19,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected ImageButton backButton;
     protected TextView toolbarTitle;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!PreferenceManager.isLoggedIn(this)) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
+
+
         setContentView(R.layout.activity_base);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -46,10 +56,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         setupBottomNavigation();
     }
 
+    protected void logout() {
+        PreferenceManager.clearSession(this);
+        startActivity(new Intent(this, LoginActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        finish();
+    }
+
     private void setupBackButton() {
         backButton.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
-        // Show back button for all activities except MainActivity
         if (!(this instanceof MainActivity)) {
             backButton.setVisibility(View.VISIBLE);
         }

@@ -6,21 +6,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.example.linkcal.models.Event;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import com.example.linkcal.helpers.FirebaseHelper;
+import android.util.Log;
 
 public class CalendarActivity extends BaseActivity {
 
@@ -28,7 +29,6 @@ public class CalendarActivity extends BaseActivity {
     private FloatingActionButton fabAddEvent;
     private Map<String, List<Event>> events;
     private EventAdapter adapter;
-
     private ActivityResultLauncher<Intent> eventCreationLauncher;
 
     @Override
@@ -40,11 +40,11 @@ public class CalendarActivity extends BaseActivity {
         eventList = findViewById(R.id.eventList);
         fabAddEvent = findViewById(R.id.fabAddEvent);
 
-        events = getDummyEvents();
+        events = new HashMap<>();
         setupEventList();
         setupFab();
-
         registerEventCreationLauncher();
+        loadEventsFromFirebase();
     }
 
     private void setupEventList() {
@@ -53,21 +53,63 @@ public class CalendarActivity extends BaseActivity {
         eventList.setAdapter(adapter);
     }
 
+    private void loadEventsFromFirebase() {
+        FirebaseHelper.getInstance().getAllDocuments("events",
+                querySnapshot -> {
+                    events.clear();
+                    List<Event> allEvents = new ArrayList<>();
+
+                    for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                        Map<String, Object> data = doc.getData();
+                        String date = (String) data.get("date");
+                        String day = (String) data.get("day");
+                        String month = (String) data.get("month");
+                        String title = (String) data.get("title");
+                        String owner = (String) data.get("owner");
+
+                        Event event = new Event(date, day, month, title, owner);
+                        allEvents.add(event);
+                    }
+
+                    // Sort events by date
+                    Collections.sort(allEvents, (e1, e2) -> {
+                        int month1 = getMonthNumber(e1.getMonth());
+                        int month2 = getMonthNumber(e2.getMonth());
+                        if (month1 != month2) return month1 - month2;
+                        return Integer.parseInt(e1.getDate()) - Integer.parseInt(e2.getDate());
+                    });
+
+                    // Add sorted events to the map
+                    for (Event event : allEvents) {
+                        addEvent(events, event);
+                    }
+
+                    runOnUiThread(() -> {
+                        adapter = new EventAdapter(events);
+                        eventList.setAdapter(adapter);
+                    });
+                },
+                exception -> Toast.makeText(this,
+                        "Error loading events: " + exception.getMessage(),
+                        Toast.LENGTH_SHORT).show()
+        );
+    }
+
+    private int getMonthNumber(String month) {
+        String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        for (int i = 0; i < months.length; i++) {
+            if (months[i].equalsIgnoreCase(month)) return i;
+        }
+        return 0;
+    }
+
     private void registerEventCreationLauncher() {
         eventCreationLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Intent data = result.getData();
-                        String title = data.getStringExtra("title");
-                        String owner = data.getStringExtra("owner");
-                        int date = data.getIntExtra("date", 1);
-                        String month = data.getStringExtra("month");
-                        String day = data.getStringExtra("day");
-
-                        Event newEvent = new Event(String.valueOf(date), day, month, title, owner);
-                        addEvent(events, newEvent);
-                        adapter.notifyDataSetChanged();
+                    if (result.getResultCode() == RESULT_OK) {
+                        loadEventsFromFirebase();
                     }
                 }
         );
@@ -80,51 +122,40 @@ public class CalendarActivity extends BaseActivity {
         });
     }
 
-
-
-    private Map<String, List<Event>> getDummyEvents() {
-        Map<String, List<Event>> events = new HashMap<>();
-        addEvent(events, new Event("15", "Tuesday", "Oct", "Team Meeting", "John"));
-        addEvent(events, new Event("15", "Tuesday", "Oct", "Lunch with Client", "Sarah"));
-        addEvent(events, new Event("17", "Thursday", "Oct", "Movie Night", "Mike"));
-        addEvent(events, new Event("20", "Sunday", "Oct", "Birthday Party", "Emma"));
-        addEvent(events, new Event("22", "Tuesday", "Oct", "Dentist Appointment", "John"));
-        addEvent(events, new Event("25", "Friday", "Oct", "Conference Call", "Sarah"));
-        return events;
-    }
-
     private void addEvent(Map<String, List<Event>> events, Event event) {
-        String key = event.date + event.month;
+        String key = event.getDate() + event.getMonth();
         if (!events.containsKey(key)) {
             events.put(key, new ArrayList<>());
         }
         events.get(key).add(event);
     }
 
-    private static class Event {
-        String date, day, month, title, owner;
-
-        Event(String date, String day, String month, String title, String owner) {
-            this.date = date;
-            this.day = day;
-            this.month = month;
-            this.title = title;
-            this.owner = owner;
-        }
-    }
-
     private class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
-
         private List<Map.Entry<String, List<Event>>> eventEntries;
 
         EventAdapter(Map<String, List<Event>> events) {
             this.eventEntries = new ArrayList<>(events.entrySet());
+
+            Collections.sort(eventEntries, (e1, e2) -> {
+                Event event1 = e1.getValue().get(0);
+                Event event2 = e2.getValue().get(0);
+
+                int month1 = getMonthNumber(event1.getMonth());
+                int month2 = getMonthNumber(event2.getMonth());
+
+                if (month1 != month2) {
+                    return month1 - month2;
+                }
+
+                return Integer.parseInt(event1.getDate()) - Integer.parseInt(event2.getDate());
+            });
         }
 
         @NonNull
         @Override
         public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_event_day, parent, false);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_event_day, parent, false);
             return new EventViewHolder(view);
         }
 
@@ -153,9 +184,9 @@ public class CalendarActivity extends BaseActivity {
 
             void bind(List<Event> events) {
                 Event firstEvent = events.get(0);
-                dateText.setText(firstEvent.date);
-                dayText.setText(firstEvent.day);
-                monthText.setText(firstEvent.month);
+                dateText.setText(firstEvent.getDate());
+                dayText.setText(firstEvent.getDay());
+                monthText.setText(firstEvent.getMonth());
 
                 EventItemAdapter eventItemAdapter = new EventItemAdapter(events);
                 eventItemsRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
@@ -165,7 +196,6 @@ public class CalendarActivity extends BaseActivity {
     }
 
     private class EventItemAdapter extends RecyclerView.Adapter<EventItemAdapter.EventItemViewHolder> {
-
         private List<Event> events;
 
         EventItemAdapter(List<Event> events) {
@@ -175,7 +205,8 @@ public class CalendarActivity extends BaseActivity {
         @NonNull
         @Override
         public EventItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_event, parent, false);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_event, parent, false);
             return new EventItemViewHolder(view);
         }
 
@@ -202,15 +233,16 @@ public class CalendarActivity extends BaseActivity {
             }
 
             void bind(Event event) {
-                titleText.setText(event.title);
-                ownerText.setText(event.owner);
+                titleText.setText(event.getTitle());
+                ownerText.setText(event.getOwner());
             }
         }
 
         private void showEventDetails(int position) {
             Event event = events.get(position);
             EventDetailsDialogFragment dialogFragment = EventDetailsDialogFragment.newInstance(
-                    event.date, event.day, event.month, event.title, event.owner);
+                    event.getDate(), event.getDay(), event.getMonth(),
+                    event.getTitle(), event.getOwner());
             dialogFragment.show(getSupportFragmentManager(), "EventDetails");
         }
     }

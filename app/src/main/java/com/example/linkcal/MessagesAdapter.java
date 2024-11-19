@@ -33,15 +33,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         if (message.isSentByUser()) {
             holder.textViewMessage.setBackgroundResource(R.drawable.bubble_background_sent);
-            // Set gravity to the right for sent messages
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.textViewMessage.getLayoutParams();
-            params.gravity = Gravity.END; // Aligns sent messages to the right
+            params.gravity = Gravity.END;
             holder.textViewMessage.setLayoutParams(params);
         } else {
             holder.textViewMessage.setBackgroundResource(R.drawable.bubble_background_received);
-            // Set gravity to the left for received messages
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.textViewMessage.getLayoutParams();
-            params.gravity = Gravity.START; // Aligns received messages to the left
+            params.gravity = Gravity.START;
             holder.textViewMessage.setLayoutParams(params);
         }
     }

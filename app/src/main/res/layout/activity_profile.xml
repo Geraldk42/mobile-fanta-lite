@@ -53,7 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/account_section"
         android:layout_margin="5dp"
         android:padding="5dp">
 
@@ -61,13 +60,21 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/username_icon" /> <!-- Replace with your icon -->
-
+            android:src="@drawable/username_icon" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/username"
+            android:text="Username: "
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_gravity="center_vertical"
             android:textSize="18sp"
@@ -80,7 +87,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/username_row"
         android:layout_margin="5dp"
         android:padding="5dp">
 
@@ -90,11 +96,19 @@
             android:contentDescription="@string/todo"
             android:src="@drawable/envelope_icon" />
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/email"
+            android:text="Email: "
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_gravity="center_vertical"
             android:textSize="18sp"
@@ -186,6 +200,15 @@
             android:layout_gravity="center_vertical"
             />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_margin="16dp"
+        android:backgroundTint="#FF0000"
+        android:textColor="@android:color/white"/>
 
     <!-- Manage Friends Button -->
     <LinearLayout

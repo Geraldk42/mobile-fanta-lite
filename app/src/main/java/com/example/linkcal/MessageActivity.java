@@ -32,12 +32,10 @@ public class MessageActivity extends BaseActivity {
         // Set title programmatically
 //        getSupportActionBar().setTitle(" Chat with [User Name]");
 
-        // Initialize message input and send button
         editTextMessage = findViewById(R.id.editTextMessage);
         buttonSend = findViewById(R.id.buttonSend);
         messageContainer = findViewById(R.id.messageContainer); // Layout for messages
 
-        // Set up the button click listener
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,11 +44,9 @@ public class MessageActivity extends BaseActivity {
         });
     }
 
-    // Method to send a message
     private void sendMessage() {
         String message = editTextMessage.getText().toString();
         if (!message.isEmpty()) {
-            // Create a TextView for the message
             TextView textViewMessage = new TextView(this);
             textViewMessage.setText(message);
             textViewMessage.setTextColor(getResources().getColor(android.R.color.black));
@@ -60,9 +56,7 @@ public class MessageActivity extends BaseActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
-            // Add the message TextView to the message container
             messageContainer.addView(textViewMessage);
-            // Clear the input field
             editTextMessage.setText("");
         }
     }

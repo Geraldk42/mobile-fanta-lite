@@ -16,7 +16,7 @@ public class FirebaseHelper {
     private static FirebaseHelper instance;
     private final FirebaseFirestore firestore;
 
-    // Callback interfaces
+
     public interface OnSuccessCallback<T> {
         void onSuccess(T result);
     }
@@ -25,12 +25,10 @@ public class FirebaseHelper {
         void onFailure(Exception e);
     }
 
-    // Private constructor for singleton pattern
     private FirebaseHelper() {
         firestore = FirebaseFirestore.getInstance();
     }
 
-    // Singleton getter
     public static synchronized FirebaseHelper getInstance() {
         if (instance == null) {
             instance = new FirebaseHelper();
@@ -38,9 +36,7 @@ public class FirebaseHelper {
         return instance;
     }
 
-    /**
-     * Add a new document to a collection
-     */
+
     public void addDocument(String collection, Map<String, Object> data,
                             OnSuccessCallback<String> successCallback,
                             OnFailureCallback failureCallback) {
@@ -58,9 +54,7 @@ public class FirebaseHelper {
                 });
     }
 
-    /**
-     * Update an existing document
-     */
+
     public void updateDocument(String collection, String documentId,
                                Map<String, Object> data,
                                OnSuccessCallback<Void> successCallback,
@@ -80,9 +74,7 @@ public class FirebaseHelper {
                 });
     }
 
-    /**
-     * Delete a document
-     */
+
     public void deleteDocument(String collection, String documentId,
                                OnSuccessCallback<Void> successCallback,
                                OnFailureCallback failureCallback) {
@@ -101,9 +93,7 @@ public class FirebaseHelper {
                 });
     }
 
-    /**
-     * Get a single document by ID
-     */
+
     public void getDocument(String collection, String documentId,
                             OnSuccessCallback<DocumentSnapshot> successCallback,
                             OnFailureCallback failureCallback) {
@@ -122,9 +112,7 @@ public class FirebaseHelper {
                 });
     }
 
-    /**
-     * Get all documents in a collection
-     */
+
     public void getAllDocuments(String collection,
                                 OnSuccessCallback<QuerySnapshot> successCallback,
                                 OnFailureCallback failureCallback) {
@@ -142,9 +130,7 @@ public class FirebaseHelper {
                 });
     }
 
-    /**
-     * Query documents with a where clause
-     */
+
     public void queryDocuments(String collection, String field, Object value,
                                OnSuccessCallback<QuerySnapshot> successCallback,
                                OnFailureCallback failureCallback) {
@@ -163,9 +149,7 @@ public class FirebaseHelper {
                 });
     }
 
-    /**
-     * Set a document with a specific ID
-     */
+
     public void setDocument(String collection, String documentId,
                             Map<String, Object> data,
                             OnSuccessCallback<Void> successCallback,

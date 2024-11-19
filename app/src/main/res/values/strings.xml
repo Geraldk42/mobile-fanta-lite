@@ -25,6 +25,17 @@
 
     <string name="event_owner">Created by: %s</string>
 
+<!--    gerald srings-->
+    <string name="login">login</string>
+<!--    <string name="email">email</string>-->
+    <string name="password">password</string>
+    <string name="register">register</string>
+    <string name="click_to_login">click to login</string>
+    <string name="click_to_register">click to register</string>
+    <string name="user_details">User Details</string>
+    <string name="logout">logout</string>
+
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
