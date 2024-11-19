@@ -79,7 +79,9 @@ public class EventCreationActivity extends BaseActivity {
         FirebaseHelper.getInstance().addDocument("events", event.toMap(),
                 documentId -> {
                     Toast.makeText(this, "Event created successfully", Toast.LENGTH_SHORT).show();
-                    // Return the new event data to CalendarActivity
+
+
+
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("eventId", documentId);
                     setResult(RESULT_OK, resultIntent);

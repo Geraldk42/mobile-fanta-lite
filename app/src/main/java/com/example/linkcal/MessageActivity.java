@@ -25,16 +25,16 @@ public class MessageActivity extends BaseActivity {
 
         setToolbarTitle("Chat with [User Name]");
 
-        // Initialize the Toolbar
+
 //        toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
-        // Set title programmatically
+
 //        getSupportActionBar().setTitle(" Chat with [User Name]");
 
         editTextMessage = findViewById(R.id.editTextMessage);
         buttonSend = findViewById(R.id.buttonSend);
-        messageContainer = findViewById(R.id.messageContainer); // Layout for messages
+        messageContainer = findViewById(R.id.messageContainer);
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override

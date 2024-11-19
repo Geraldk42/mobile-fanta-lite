@@ -71,7 +71,7 @@ public class CalendarActivity extends BaseActivity {
                         allEvents.add(event);
                     }
 
-                    // Sort events by date
+
                     Collections.sort(allEvents, (e1, e2) -> {
                         int month1 = getMonthNumber(e1.getMonth());
                         int month2 = getMonthNumber(e2.getMonth());
@@ -79,7 +79,7 @@ public class CalendarActivity extends BaseActivity {
                         return Integer.parseInt(e1.getDate()) - Integer.parseInt(e2.getDate());
                     });
 
-                    // Add sorted events to the map
+
                     for (Event event : allEvents) {
                         addEvent(events, event);
                     }
