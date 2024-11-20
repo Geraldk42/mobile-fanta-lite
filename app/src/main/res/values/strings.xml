@@ -25,7 +25,7 @@
 
     <string name="event_owner">Created by: %s</string>
 
-<!--    gerald srings-->
+<!--    gerald strings-->
     <string name="login">login</string>
 <!--    <string name="email">email</string>-->
     <string name="password">password</string>
@@ -34,6 +34,14 @@
     <string name="click_to_register">click to register</string>
     <string name="user_details">User Details</string>
     <string name="logout">logout</string>
+
+    <string name="share_my_id">Share My ID</string>
+    <string name="enter_a_friend_s_id_to_link_calendars">Enter a Friend\'s ID to Link Calendars:</string>
+    <string name="enter_id">Enter ID</string>
+    <string name="link_calendar">Link Calendar</string>
+    <string name="_12345abc">12345ABC</string>
+    <string name="your_unique_id">Your Unique ID:</string>
+    <string name="userId"/>
 
 
     <string name="lorem_ipsum">

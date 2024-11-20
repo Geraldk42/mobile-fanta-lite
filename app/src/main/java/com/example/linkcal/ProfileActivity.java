@@ -2,6 +2,7 @@
 
 package com.example.linkcal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Switch;
@@ -40,11 +41,17 @@ public class ProfileActivity extends BaseActivity {
 
         notificationSwitch = findViewById(R.id.notification_switch);
 
-        manageFriendsButton = findViewById(R.id.manage_friends_button);
+//        manageFriendsButton = findViewById(R.id.manage_friends_button);
 
 
         profileUsername = findViewById(R.id.profile_username);
         profileEmail = findViewById(R.id.profile_email);
+
+//        Button shareCalendarButton = findViewById(R.id.shareCalendarButton);
+        Button manageFriendsButton = findViewById(R.id.manage_friends_button);
+        manageFriendsButton.setOnClickListener(v -> {
+            startActivity(new Intent(ProfileActivity.this, ShareCalendarActivity.class));
+        });
 
         Button logoutButton = findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(v -> logout());
@@ -54,7 +61,7 @@ public class ProfileActivity extends BaseActivity {
         String userEmail = PreferenceManager.getUserEmail(this);
         if (userEmail != null) {
             TextView emailTextView = findViewById(R.id.profile_email);
-            TextView nameTextView = findViewById(R.id.profile_name);
+            TextView nameTextView = findViewById(R.id.profile_username);
 
             emailTextView.setText(userEmail);
             nameTextView.setText(userEmail.split("@")[0]);

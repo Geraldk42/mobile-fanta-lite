@@ -24,11 +24,11 @@
 
 
         <!-- Profile Name -->
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_name" />
+<!--        <TextView-->
+<!--            android:id="@+id/profile_name"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/profile_name" />-->
 
         <!-- Can be set dynamically -->
 
@@ -114,6 +114,14 @@
             android:textSize="18sp"
             android:textColor="@android:color/black" />
     </LinearLayout>
+
+
+<!--       <Button-->
+<!--        android:id="@+id/shareCalendarButton"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Share Calendar"-->
+<!--        android:layout_margin="16dp"/>-->
 
     <!-- Privacy and Security Options -->
     <TextView

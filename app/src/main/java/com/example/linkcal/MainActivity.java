@@ -15,9 +15,13 @@ public class MainActivity extends BaseActivity {
         ImageButton schoolButtom = findViewById(R.id.eventCreationButton);
         ImageButton friendsButton = findViewById(R.id.friendsBtn);
 
+        ImageButton familyBtn = findViewById(R.id.friendsButton);
+
+
         friendsButton.setOnClickListener(v -> startActivity(new Intent(this, CalendarActivity.class)));
         calendarButton.setOnClickListener(v -> startActivity(new Intent(this, CalendarActivity.class)));
         schoolButtom.setOnClickListener(v -> startActivity(new Intent(this, CalendarActivity.class)));
+        familyBtn.setOnClickListener(v -> startActivity(new Intent(this, CalendarActivity.class)));
 
 
          }
