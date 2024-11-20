@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:padding="30dp"
     android:background="@drawable/appback"
-    tools:context=".registration">
+    tools:context=".SignUpActivity">
 
     <TextView
         android:layout_width="match_parent"

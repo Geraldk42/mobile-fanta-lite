@@ -209,14 +209,7 @@
             />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_margin="16dp"
-        android:backgroundTint="#FF0000"
-        android:textColor="@android:color/white"/>
+
 
     <!-- Manage Friends Button -->
     <LinearLayout
@@ -236,7 +229,19 @@
             android:textSize="18sp"
             android:backgroundTint="@color/black"
             android:textColor="@android:color/white" />
+
+
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_margin="16dp"
+        android:backgroundTint="#FF0000"
+        android:textColor="@android:color/white"/>
 
     <!-- Notification Settings Section -->
     <TextView

@@ -42,7 +42,7 @@
         android:id="@+id/friendIdInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter friend's email"
+        android:hint="Enter friend's calendar Id"
         android:inputType="textEmailAddress"
         android:layout_marginTop="8dp"/>
 

@@ -61,7 +61,7 @@ public class ShareCalendarActivity extends BaseActivity {
 
     private void shareUserId() {
         String userEmail = userIdText.getText().toString();
-        String shareMessage = "Hey, link your calendar with me using my ID: " + userEmail;
+        String shareMessage = "Hey, link your calendar with me using my ID: " +"https://linkcal.com/profiles/"+ userEmail;
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
@@ -73,9 +73,12 @@ public class ShareCalendarActivity extends BaseActivity {
     private void linkWithFriend() {
         String friendEmail = friendIdInput.getText().toString().trim();
         if (friendEmail.isEmpty()) {
-            Toast.makeText(this, "Please enter friend's email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter friend's calendar id", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        Toast.makeText(ShareCalendarActivity.this,
+                "Calendar shared successfully!", Toast.LENGTH_SHORT).show();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) return;
