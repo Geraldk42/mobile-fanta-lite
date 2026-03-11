@@ -1,4 +1,4 @@
-LinkCal
+**LinkCal**
 Overview
 LinkCal is a mobile application designed to simplify social scheduling. At its core, it allows users to connect with friends, family, or colleagues by "linking" calendars. Instead of sending endless texts to find a time to meet, LinkCal lets users share their availability and view connected calendars to easily coordinate plans while maintaining control over their privacy.
 
